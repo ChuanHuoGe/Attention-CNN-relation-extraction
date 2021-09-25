@@ -105,7 +105,6 @@ if __name__ == '__main__':
     loader = [train_loader, dev_loader, test_loader]
     print('finish!')
     print(train_loader)
-
     print('--------------------------------------')
     model = Attention_CNN(word_vec=word_vec, class_num=class_num,
                           pos_num=len(pos2id), config=config)

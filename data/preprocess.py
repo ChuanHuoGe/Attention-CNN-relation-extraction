@@ -15,7 +15,8 @@ props = dict(
 
 
 def sentence_process(raw_sentence):
-    sentence = raw_sentence[1:-1]  # remove quotes
+    #sentence = raw_sentence[1:-1]  # remove quotes
+    sentence = raw_sentence
     res = json.loads(nlp.annotate(sentence, properties=props))
     sents = res['sentences']
     token = [x['word'] for sent in sents for x in sent['tokens']]
@@ -61,15 +62,17 @@ def remove_postion_indicators(token, pos):
 
 
 def convert(src_file, des_file):
-    with open(src_file, 'r', encoding='utf-8') as fr:
+    with open(src_file, 'r', encoding='utf-8', errors='ignore') as fr:
         file_data = fr.readlines()
 
-    with open(des_file, 'w', encoding='utf-8') as fw:
+    with open(des_file, 'w', encoding='utf-8', errors='ignore') as fw:
         for i in tqdm(range(0, len(file_data), 4)):
             meta = {}
             s = file_data[i].strip().split('\t')
+            print(s)
             assert len(s) == 2
             meta['id'] = s[0]
+            print(s[0])
             meta['relation'] = file_data[i+1].strip()
             meta['comment'] = file_data[i+2].strip()
             sen_res = sentence_process(s[1])
@@ -78,8 +81,8 @@ def convert(src_file, des_file):
 
 
 if __name__ == '__main__':
-    path_train = './SemEval2010_task8_all_data/SemEval2010_task8_training/TRAIN_FILE.TXT'
-    path_test = './SemEval2010_task8_all_data/SemEval2010_task8_testing_keys/TEST_FILE_FULL.TXT'
+    path_train = './newtrain.txt'
+    path_test = './newtest.txt'
 
     convert(path_train, 'train.json')
     convert(path_test, 'test.json')

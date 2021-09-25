@@ -98,7 +98,7 @@ class Config(object):
                             default=1.0,
                             help='learning rate')
         parser.add_argument('--max_len', type=int,
-                            default=100,
+                            default=150,
                             help='max length of sentence')
         parser.add_argument('--pos_dis', type=int,
                             default=50,
